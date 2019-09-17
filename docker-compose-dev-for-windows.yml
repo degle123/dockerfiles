@@ -3,7 +3,7 @@ services:
     tp:
         build: 
             context: ""
-            dockerfile:  DockerfileDev
+            dockerfile:  Dockerfile
         volumes:
             - .:/data/webapp
         links:
