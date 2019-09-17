@@ -1,0 +1,35 @@
+version: '2'
+services:
+    tp:
+        build: 
+            context: ""
+            dockerfile:  DockerfileDev
+        volumes:
+            - .:/data/webapp
+        links:
+            - tp-db
+            - tp-redis
+        restart: always
+        environment:
+            ## mysql配置
+            - ENV_DEFAULT_MYSQL_DB_HOST=rm-bp15442w040f9qqq0so.mysql.rds.aliyuncs.com
+            - ENV_DEFAULT_MYSQL_DB_NAME=dev_bjbs_apps_cms
+            - ENV_DEFAULT_MYSQL_DB_USERNAME=dev_api_rds_rw
+            - ENV_DEFAULT_MYSQL_DB_PASSWORD=PqFwgpwQxd6zuSAM
+            - ENV_DEFAULT_MYSQL_DB_PREFIX=bj_
+            ## kvcache配置
+            - ENV_DEFAULT_REDIS_HOST=redis
+            - ENV_KVC_REDIS_HOST=redis
+            ## 其它配置
+            - ENV_HOST_URL=https://dev-api.bujian66.cn
+            - ENV_IMG_URL=https://dev-img.bujian66.cn
+        ports:
+            - 8889:80
+    tp-db:
+        image: mysql:5.6
+        ports:
+            - 3307:3306
+    tp-redis:
+        image: redis
+        ports:
+            - 6380:6379
